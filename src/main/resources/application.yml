@@ -10,3 +10,24 @@ spring:
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+spring-project:
+  kafka:
+    topics:
+      producer:
+        transaction-result: t1_demo_transaction_result
+      consumer:
+        transactions-accept:
+          id: spring-project-kafka-transactions-accept
+          name: t1_demo_transaction_accept
+    transaction:
+      max-count: 5
+      time-window-min: 10
